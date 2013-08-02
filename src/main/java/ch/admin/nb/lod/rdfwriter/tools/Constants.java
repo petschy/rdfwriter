@@ -1,4 +1,4 @@
-package ch.admin.nb.lod.rdfwriter.tools;
+package nb.admin.ch.lod.rdfwriter.tools;
 
 public class Constants {
 
@@ -25,20 +25,20 @@ public class Constants {
 
 	// Helveticat
 	// Titeldaten (helveticatBib)
-	public static final String NS_HELVETICAT_BIB = "http://ch.admin.nb/lod/helveticat/bib";
+	public static final String NS_HELVETICAT_BIB = "http://nb.admin.ch/lod/helveticat/bib";
 	public static final String NS_HELVETICAT_BIB_PREFIX = "helveticatBib";
 	// Normdaten (helveticatAuth)
-	public static final String NS_HELVETICAT_AUTH = "http://ch.admin.nb/lod/helveticat/auth";
+	public static final String NS_HELVETICAT_AUTH = "http://nb.admin.ch/lod/helveticat/auth";
 	public static final String NS_HELVETICAT_AUTH_PREFIX = "helveticatAuth";
 
 	// NB Ontology (nbo)
-	public static final String NS_NBO = "http://ch.admin.nb/lod/ontology#";
+	public static final String NS_NBO = "http://nb.admin.ch/lod/ontology#";
 	public static final String NS_NBO_PREFIX = "nbo";
-	public static final String NS_NBO_ISBN10 = "http://ch.admin.nb/lod/ontology#isbn10";
-	public static final String NS_NBO_ISBN13 = "http://ch.admin.nb/lod/ontology#isbn13";
-	public static final String NS_NBO_ISBN_INVALID = "http://ch.admin.nb/lod/ontology#isbnInvalid";
-	public static final String NS_NBO_ISBN_INVALID_WITH_HYPHEN = "http://ch.admin.nb/lod/ontology#isbnInvalidWithHyphen";
-	public static final String NS_NBO_SUBJECT_RSWK = "http://ch.admin.nb/lod/ontology#subjectRswk";
+	public static final String NS_NBO_ISBN10 = "http://nb.admin.ch/lod/ontology#isbn10";
+	public static final String NS_NBO_ISBN13 = "http://nb.admin.ch/lod/ontology#isbn13";
+	public static final String NS_NBO_ISBN_INVALID = "http://nb.admin.ch/lod/ontology#isbnInvalid";
+	public static final String NS_NBO_ISBN_INVALID_WITH_HYPHEN = "http://nb.admin.ch/lod/ontology#isbnInvalidWithHyphen";
+	public static final String NS_NBO_SUBJECT_RSWK = "http://nb.admin.ch/lod/ontology#subjectRswk";
 
 	// RDA
 	public static final String NS_RDA = "http://rdvocab.info/Elements/";
