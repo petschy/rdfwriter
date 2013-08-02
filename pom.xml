@@ -3,11 +3,11 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>eu.schwery.lod</groupId>
-  <artifactId>experiment</artifactId>
+  <artifactId>rdfwriter</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
 
-  <name>experiment</name>
+  <name>rdfwriter</name>
   <url>http://maven.apache.org</url>
 
   <properties>
