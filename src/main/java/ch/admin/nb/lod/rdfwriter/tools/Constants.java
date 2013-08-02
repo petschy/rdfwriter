@@ -1,4 +1,4 @@
-package nb.admin.ch.lod.rdfwriter.tools;
+package ch.admin.nb.lod.rdfwriter.tools;
 
 public class Constants {
 
