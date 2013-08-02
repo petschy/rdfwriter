@@ -1,4 +1,4 @@
-package eu.schwery.lod.tools;
+package ch.admin.nb.lod.rdfwriter.tools;
 
 import java.io.File;
 import java.io.FileWriter;

@@ -15,7 +15,7 @@
  * Version History:
  *  2.3 2009-03-16 tidy code, rename some methods.
  */
-package eu.schwery.lod.tools;
+package ch.admin.nb.lod.rdfwriter.tools;
 
 import java.util.BitSet;
 

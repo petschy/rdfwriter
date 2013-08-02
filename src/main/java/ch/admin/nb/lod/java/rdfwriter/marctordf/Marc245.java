@@ -1,17 +1,17 @@
-package eu.schwery.lod.marctordf;
+package ch.admin.nb.lod.java.rdfwriter.marctordf;
 
 import java.util.List;
 
 import org.marc4j.marc.DataField;
 import org.marc4j.marc.Subfield;
 
+import ch.admin.nb.lod.rdfwriter.tools.Constants;
+import ch.admin.nb.lod.rdfwriter.tools.StringTool;
+
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.vocabulary.DC_11;
-
-import eu.schwery.lod.tools.Constants;
-import eu.schwery.lod.tools.StringTool;
 
 public class Marc245 {
 

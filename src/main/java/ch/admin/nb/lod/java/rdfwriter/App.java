@@ -1,4 +1,4 @@
-package eu.schwery.lod.experiment;
+package ch.admin.nb.lod.java.rdfwriter;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -13,20 +13,20 @@ import org.marc4j.marc.DataField;
 import org.marc4j.marc.Record;
 import org.marc4j.marc.VariableField;
 
+import ch.admin.nb.lod.java.rdfwriter.marctordf.Marc020;
+import ch.admin.nb.lod.java.rdfwriter.marctordf.Marc1XX;
+import ch.admin.nb.lod.java.rdfwriter.marctordf.Marc245;
+import ch.admin.nb.lod.java.rdfwriter.marctordf.Marc260;
+import ch.admin.nb.lod.java.rdfwriter.marctordf.Marc689;
+import ch.admin.nb.lod.java.rdfwriter.marctordf.Marc6XX;
+import ch.admin.nb.lod.java.rdfwriter.marctordf.Marc7XX;
+import ch.admin.nb.lod.rdfwriter.tools.Constants;
+import ch.admin.nb.lod.rdfwriter.tools.Variables;
+
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.vocabulary.DCTerms;
 import com.hp.hpl.jena.vocabulary.DC_11;
-
-import eu.schwery.lod.marctordf.Marc020;
-import eu.schwery.lod.marctordf.Marc1XX;
-import eu.schwery.lod.marctordf.Marc245;
-import eu.schwery.lod.marctordf.Marc260;
-import eu.schwery.lod.marctordf.Marc689;
-import eu.schwery.lod.marctordf.Marc6XX;
-import eu.schwery.lod.marctordf.Marc7XX;
-import eu.schwery.lod.tools.Constants;
-import eu.schwery.lod.tools.Variables;
 
 /**
  * Hello world!

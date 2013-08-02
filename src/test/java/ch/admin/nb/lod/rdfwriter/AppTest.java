@@ -1,4 +1,4 @@
-package eu.schwery.lod.experiment;
+package ch.admin.nb.lod.rdfwriter;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

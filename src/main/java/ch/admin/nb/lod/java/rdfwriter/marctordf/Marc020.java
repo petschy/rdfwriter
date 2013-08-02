@@ -1,4 +1,4 @@
-package eu.schwery.lod.marctordf;
+package ch.admin.nb.lod.java.rdfwriter.marctordf;
 
 import java.util.List;
 
@@ -7,14 +7,14 @@ import net.sourceforge.isbnhyphenappender.ISBNHyphenAppender;
 import org.marc4j.marc.DataField;
 import org.marc4j.marc.VariableField;
 
+import ch.admin.nb.lod.rdfwriter.tools.Constants;
+import ch.admin.nb.lod.rdfwriter.tools.ISBN;
+import ch.admin.nb.lod.rdfwriter.tools.MyFileWriter;
+import ch.admin.nb.lod.rdfwriter.tools.Variables;
+
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.rdf.model.Resource;
-
-import eu.schwery.lod.tools.Constants;
-import eu.schwery.lod.tools.ISBN;
-import eu.schwery.lod.tools.MyFileWriter;
-import eu.schwery.lod.tools.Variables;
 
 public class Marc020 {
 
