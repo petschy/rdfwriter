@@ -13,6 +13,9 @@ public class StringTool {
 		s = s.replaceAll(Constants.NON_SORT_END, "");
 		// Mehrfache Leerzeichen durch eines ersetzen
 		s = s.replaceAll(" {2,}", " ");
+		// Leerzeichen Doppelpunkt oder Schrägstrich am Schluss löschen
+		s = s.replaceAll(" :$", "");
+		s = s.replaceAll(" /$", "");
 		// Normalisieren NFC
 		s = Normalizer.normalize(s, Normalizer.Form.NFC);
 		return s;

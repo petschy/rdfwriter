@@ -13,6 +13,12 @@ import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.vocabulary.DC_11;
 
+/**
+ * @author petschy
+ * 
+ * Titel: Marc-Feld 245
+ *
+ */
 public class Marc245 {
 
 	public void toRdf(DataField df, Model model, String id) {

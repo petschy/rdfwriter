@@ -12,6 +12,10 @@ public class Constants {
 	public static final String[] F6XX = { "600", "610", "611", "630", "648",
 			"650", "651", "655" };
 	public static final String[] F7XX = { "700", "710", "711", "730" };
+	
+	// DINI-AG-KIM
+	public static final String[] KIM_TITLE = { "245", "130", "240", "210", "246" };
+	public static final String[] KIM_CREATOR = { "100", "110", "111", "700", "710", "711" };
 
 	// Dublin Core
 	public static final String NS_DC_PREFIX = "dc";
@@ -22,6 +26,7 @@ public class Constants {
 	public static final String NS_BIBO_PREFIX = "bibo";
 	public static final String NS_BIBO_ISBN10 = "http://purl.org/ontology/bibo/isbn10";
 	public static final String NS_BIBO_ISBN13 = "http://purl.org/ontology/bibo/isbn13";
+	public static final String NS_BIBO_SHORT_TITLE = "http://purl.org/ontology/bibo/shortTitle";
 
 	// Helveticat
 	// Titeldaten (helveticatBib)
@@ -44,6 +49,8 @@ public class Constants {
 	public static final String NS_RDA = "http://rdvocab.info/Elements/";
 	public static final String NS_RDA_PREFIX = "rda";
 	public static final String NS_RDA_PUBLICATION_STATEMENT = "http://rdvocab.info/Elements/publicationStatement";
+	public static final String NS_RDA_PLACE_OF_PUBLICATION = "http://rdvocab.info/Elements/placeOfPublication";
+	public static final String NS_RDA_OTHER_TITLE_INFORMATION = "http://rdvocab.info/Elements/otherTitleInformation";
 
 	// GND
 	public static final String NS_GND = "http://d-nb.info/gnd/";
