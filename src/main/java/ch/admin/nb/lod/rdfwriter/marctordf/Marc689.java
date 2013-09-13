@@ -1,4 +1,4 @@
-package ch.admin.nb.lod.java.rdfwriter.marctordf;
+package ch.admin.nb.lod.rdfwriter.marctordf;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

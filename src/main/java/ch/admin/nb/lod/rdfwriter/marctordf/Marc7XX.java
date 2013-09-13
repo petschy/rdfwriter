@@ -1,4 +1,4 @@
-package ch.admin.nb.lod.java.rdfwriter.marctordf;
+package ch.admin.nb.lod.rdfwriter.marctordf;
 
 import java.util.List;
 
@@ -14,8 +14,7 @@ import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.vocabulary.DC_11;
 
-public class Marc1XX {
-	
+public class Marc7XX {
 	public void toRdf(List<VariableField> listVariableField, Model model,
 			String id) {
 		for (VariableField vf : listVariableField) {
@@ -25,31 +24,33 @@ public class Marc1XX {
 			Property rdfPredicate;
 			Resource rdfObject;
 
-			String creator = "";
+			String contributor = "";
 
 			List<Subfield> listSubfields = df.getSubfields();
 
 			String subfieldA = "";
 			String subfieldData = "";
-			for (Subfield sf : listSubfields) {
-
-				// String s = sf.getData().replaceAll("( *)$", "$1");
-				if (sf.getCode() == 'a') {
-					subfieldA = sf.getData();
-				} else {
-					subfieldData = subfieldData.concat(" ").concat(sf.getData());
+			if (df.getSubfield('t') == null) {
+				for (Subfield sf : listSubfields) {
+					if (sf.getCode() == 'a') {
+						subfieldA = sf.getData();
+					} else {
+						subfieldData = subfieldData.concat(" ").concat(
+								sf.getData());
+					}
 				}
 			}
-			creator = subfieldA.concat(subfieldData);
-			
-			creator = StringTool.cleanUp(creator);
+			contributor = subfieldA.concat(subfieldData);
 
-			// Triple bilden (ISBN13 ohne Bindestrich)
-			rdfSubject = model.createResource(Constants.NS_HELVETICAT_BIB + id);
-			model.add(rdfSubject, DC_11.creator, creator);
+			contributor = StringTool.cleanUp(contributor);
+
+			// Triple bilden
+			if (!contributor.equals("")) {
+				rdfSubject = model.createResource(Constants.NS_HELVETICAT_BIB + id);
+				model.add(rdfSubject, DC_11.contributor, contributor);
+			}
 
 		}
 
 	}
-
 }

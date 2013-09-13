@@ -1,4 +1,4 @@
-package ch.admin.nb.lod.java.rdfwriter;
+package ch.admin.nb.lod.rdfwriter;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -13,13 +13,13 @@ import org.marc4j.marc.DataField;
 import org.marc4j.marc.Record;
 import org.marc4j.marc.VariableField;
 
-import ch.admin.nb.lod.java.rdfwriter.marctordf.Marc020;
-import ch.admin.nb.lod.java.rdfwriter.marctordf.Marc1XX;
-import ch.admin.nb.lod.java.rdfwriter.marctordf.Marc245;
-import ch.admin.nb.lod.java.rdfwriter.marctordf.Marc260;
-import ch.admin.nb.lod.java.rdfwriter.marctordf.Marc689;
-import ch.admin.nb.lod.java.rdfwriter.marctordf.Marc6XX;
-import ch.admin.nb.lod.java.rdfwriter.marctordf.Marc7XX;
+import ch.admin.nb.lod.rdfwriter.marctordf.Marc020;
+import ch.admin.nb.lod.rdfwriter.marctordf.Marc1XX;
+import ch.admin.nb.lod.rdfwriter.marctordf.Marc245;
+import ch.admin.nb.lod.rdfwriter.marctordf.Marc260;
+import ch.admin.nb.lod.rdfwriter.marctordf.Marc689;
+import ch.admin.nb.lod.rdfwriter.marctordf.Marc6XX;
+import ch.admin.nb.lod.rdfwriter.marctordf.Marc7XX;
 import ch.admin.nb.lod.rdfwriter.tools.Constants;
 import ch.admin.nb.lod.rdfwriter.tools.Variables;
 

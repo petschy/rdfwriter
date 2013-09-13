@@ -1,4 +1,4 @@
-package ch.admin.nb.lod.java.rdfwriter.marctordf;
+package ch.admin.nb.lod.rdfwriter.marctordf;
 
 import java.util.List;
 
@@ -14,7 +14,8 @@ import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.vocabulary.DC_11;
 
-public class Marc7XX {
+public class Marc260 {
+
 	public void toRdf(List<VariableField> listVariableField, Model model,
 			String id) {
 		for (VariableField vf : listVariableField) {
@@ -24,33 +25,37 @@ public class Marc7XX {
 			Property rdfPredicate;
 			Resource rdfObject;
 
-			String contributor = "";
+			String publicationStatement = "";
 
 			List<Subfield> listSubfields = df.getSubfields();
 
 			String subfieldA = "";
 			String subfieldData = "";
-			if (df.getSubfield('t') == null) {
-				for (Subfield sf : listSubfields) {
-					if (sf.getCode() == 'a') {
-						subfieldA = sf.getData();
-					} else {
-						subfieldData = subfieldData.concat(" ").concat(
-								sf.getData());
-					}
+			for (Subfield sf : listSubfields) {
+				if (sf.getCode() == 'a') {
+					subfieldA = sf.getData();
+				} else {
+					subfieldData = subfieldData.concat(" ")
+							.concat(sf.getData());
 				}
-			}
-			contributor = subfieldA.concat(subfieldData);
 
-			contributor = StringTool.cleanUp(contributor);
+			}
+			publicationStatement = subfieldA.concat(subfieldData);
+
+			publicationStatement = StringTool.cleanUp(publicationStatement);
+			// Punkt nach Publikationsjahr löschen
+			publicationStatement = publicationStatement.replaceAll("(\\d)\\.$", "$1");
 
 			// Triple bilden
-			if (!contributor.equals("")) {
+			if (!publicationStatement.equals("")) {
 				rdfSubject = model.createResource(Constants.NS_HELVETICAT_BIB + id);
-				model.add(rdfSubject, DC_11.contributor, contributor);
+				rdfPredicate = model
+						.createProperty(Constants.NS_RDA_PUBLICATION_STATEMENT);
+				model.add(rdfSubject, rdfPredicate, publicationStatement);
 			}
 
 		}
 
 	}
+
 }
