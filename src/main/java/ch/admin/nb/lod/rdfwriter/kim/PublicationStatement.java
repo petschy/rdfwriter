@@ -76,7 +76,6 @@ public class PublicationStatement {
 			}
 			
 			if (!subfieldB.equals("")) {
-				System.out.println(subfieldB);
 				subfieldB = StringTool.cleanUp(subfieldB);
 				rdfSubject = model.createResource(Constants.NS_HELVETICAT_BIB
 						+ id);
