@@ -13,7 +13,7 @@ public class StringTool {
 		s = s.replaceAll(Constants.NON_SORT_END, "");
 		// Mehrfache Leerzeichen durch eines ersetzen
 		s = s.replaceAll(" {2,}", " ");
-		// Leerzeichen Doppelpunkt oder Schrägstrich am Schluss löschen
+		// ISBD-Interpunktion am Zeilenende löschen
 		s = s.replaceAll(" :$", "");
 		s = s.replaceAll(" /$", "");
 		s = s.replaceAll(" =$", "");

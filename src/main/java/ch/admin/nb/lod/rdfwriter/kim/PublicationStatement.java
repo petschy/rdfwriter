@@ -67,6 +67,7 @@ public class PublicationStatement {
 			}
 
 			if (!subfieldA.equals("")) {
+				subfieldA = StringTool.cleanUp(subfieldA);
 				rdfSubject = model.createResource(Constants.NS_HELVETICAT_BIB
 						+ id);
 				rdfPredicate = model
@@ -75,12 +76,15 @@ public class PublicationStatement {
 			}
 			
 			if (!subfieldB.equals("")) {
+				System.out.println(subfieldB);
+				subfieldB = StringTool.cleanUp(subfieldB);
 				rdfSubject = model.createResource(Constants.NS_HELVETICAT_BIB
 						+ id);
 				model.add(rdfSubject, DC_11.publisher, subfieldB);
 			}
 
-			if (!subfieldA.equals("")) {
+			if (!subfieldC.equals("")) {
+				subfieldC = StringTool.cleanUp(subfieldC);
 				rdfSubject = model.createResource(Constants.NS_HELVETICAT_BIB
 						+ id);
 				model.add(rdfSubject, DCTerms.issued, subfieldC);
