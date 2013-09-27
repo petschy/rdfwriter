@@ -7,7 +7,7 @@ public class Variables {
 	public String fileRdfTurtle = "rdf/turtle.ttl";
 	
 	// Marc-Dateien
-	public String fileMrcIn = "mrc/SG-004.mrc";
+	public String fileMrcIn = "mrc/tests_ps/issn-0044-2275_nb.mrc";
 	
 	
 	// Log-Dateien
