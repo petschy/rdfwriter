@@ -16,6 +16,8 @@ public class StringTool {
 		// Leerzeichen Doppelpunkt oder Schrägstrich am Schluss löschen
 		s = s.replaceAll(" :$", "");
 		s = s.replaceAll(" /$", "");
+		s = s.replaceAll(" =$", "");
+		s = s.replaceAll(",$", "");
 		// Normalisieren NFC
 		s = Normalizer.normalize(s, Normalizer.Form.NFC);
 		return s;
