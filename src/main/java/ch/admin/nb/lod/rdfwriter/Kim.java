@@ -36,6 +36,9 @@ public class Kim {
 
 		// Variablen
 		Variables var = new Variables();
+		
+		HelveticatAuthData authData = new HelveticatAuthData();
+		authData.parseHelveticatAuthData(model);
 
 		// Marc-Felder-Liste
 		List<VariableField> listVariableField;
@@ -106,6 +109,8 @@ public class Kim {
 			model.setNsPrefix(Constants.NS_DCTERMS_PREFIX, DCTerms.getURI());
 			model.setNsPrefix(Constants.NS_RDA_PREFIX, Constants.NS_RDA);
 			model.setNsPrefix(Constants.NS_RDA_CARRIERTYPE_PREFIX, Constants.NS_RDA_CARRIERTYPE);
+			model.setNsPrefix(Constants.NS_HELVETICAT_AUTH_PREFIX,
+					Constants.NS_HELVETICAT_AUTH);
 			// model.setNsPrefix(Constants.NS_GND_PREFIX, Constants.NS_GND);
 			// model.write(System.out);
 			// RdfXml in Datei schreiben

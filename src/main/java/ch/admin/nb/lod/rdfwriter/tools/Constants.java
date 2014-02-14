@@ -41,7 +41,7 @@ public class Constants {
 	public static final String NS_HELVETICAT_BIB = "http://nb.admin.ch/lod/helveticat/bib";
 	public static final String NS_HELVETICAT_BIB_PREFIX = "helveticatBib";
 	// Normdaten (helveticatAuth)
-	public static final String NS_HELVETICAT_AUTH = "http://nb.admin.ch/lod/helveticat/auth";
+	public static final String NS_HELVETICAT_AUTH = "http://nb.admin.ch/lod/helveticat/auth/";
 	public static final String NS_HELVETICAT_AUTH_PREFIX = "helveticatAuth";
 
 	// NB Ontology (nbo)
@@ -52,6 +52,11 @@ public class Constants {
 	public static final String NS_NBO_ISBN_INVALID = "http://nb.admin.ch/lod/ontology#isbnInvalid";
 	public static final String NS_NBO_ISBN_INVALID_WITH_HYPHEN = "http://nb.admin.ch/lod/ontology#isbnInvalidWithHyphen";
 	public static final String NS_NBO_SUBJECT_RSWK = "http://nb.admin.ch/lod/ontology#subjectRswk";
+	public static final String NS_NBO_HELVETICAT_AUTH_ID = "http://nb.admin.ch/lod/ontology#helveticatAuthId";
+	public static final String NS_NBO_HELVETICAT_PERSON = "http://nb.admin.ch/lod/ontology#preferredNameForThePerson";
+	public static final String NS_NBO_HELVETICAT_CORPORATE_BODY = "http://nb.admin.ch/lod/ontology#preferredNameForTheCorporateBody";
+	public static final String NS_NBO_HELVETICAT_CONFERENCE = "http://nb.admin.ch/lod/ontology#preferredNameForTheConferenceOrEvent";
+	public static final String NS_NBO_HELVETICAT_WORK = "http://nb.admin.ch/lod/ontology#preferredNameForTheWork";
 
 	// RDA
 	public static final String NS_RDA = "http://rdvocab.info/Elements/";
