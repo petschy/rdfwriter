@@ -92,7 +92,7 @@ public class Relation {
 					data = df.getSubfield('w').getData();
 					data = StringTool.leftPad(data, 9, '0');
 					rdfPredicate = model
-							.createProperty(Constants.NS_RDA_PRECEDED_BY);
+							.createProperty(Constants.NS_RDA_WEMI_PRECEDED_BY);
 
 					model.add(rdfSubject, rdfPredicate,
 							Constants.NS_HELVETICAT_BIB + data);
@@ -103,7 +103,7 @@ public class Relation {
 					data = df.getSubfield('w').getData();
 					data = StringTool.leftPad(data, 9, '0');
 					rdfPredicate = model
-							.createProperty(Constants.NS_RDA_SUCCEEDED_BY);
+							.createProperty(Constants.NS_RDA_WEMI_SUCCEEDED_BY);
 
 					model.add(rdfSubject, rdfPredicate,
 							Constants.NS_HELVETICAT_BIB + data);
