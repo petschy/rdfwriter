@@ -15,18 +15,47 @@ import org.marc4j.marc.Leader;
 import org.marc4j.marc.Record;
 import org.marc4j.marc.VariableField;
 
+import ch.admin.nb.lod.rdfwriter.kim.CreatorOrContributor;
+import ch.admin.nb.lod.rdfwriter.kim.Edition;
+import ch.admin.nb.lod.rdfwriter.kim.Language;
+import ch.admin.nb.lod.rdfwriter.kim.MediaType;
+import ch.admin.nb.lod.rdfwriter.kim.PhysicalDescription;
+import ch.admin.nb.lod.rdfwriter.kim.PublicationStatement;
+import ch.admin.nb.lod.rdfwriter.kim.Relation;
+import ch.admin.nb.lod.rdfwriter.kim.SeriesStatement;
+import ch.admin.nb.lod.rdfwriter.kim.Title;
+import ch.admin.nb.lod.rdfwriter.tools.Constants;
+import ch.admin.nb.lod.rdfwriter.tools.Variables;
+
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.vocabulary.DCTerms;
 import com.hp.hpl.jena.vocabulary.DC_11;
 
-import ch.admin.nb.lod.rdfwriter.kim.CreatorOrContributor;
-import ch.admin.nb.lod.rdfwriter.kim.MediaType;
-import ch.admin.nb.lod.rdfwriter.kim.PublicationStatement;
-import ch.admin.nb.lod.rdfwriter.kim.Title;
-import ch.admin.nb.lod.rdfwriter.tools.Constants;
-import ch.admin.nb.lod.rdfwriter.tools.Variables;
-
+/**
+ * 
+ * 
+ * <p><p>Die Klasse Kim führt folgende Aktionen durch:
+ * 	<ul>
+ * 		<li>Datei mit Autoritätsdatensätzen wird in das RDF-Model eingelesen</li>
+ * 		<li>Datei mit bibliographischen Datensätzen wird in das RDF-Model eingelesen für die Elemente
+ * 			<ul>
+ * 				<li>Titel (Class Title)</li>
+ * 				<li>Personen und Körperschaften (Class CreatorOrContributor)</li>
+ * 				<li>Orts-, Verlags- und Datumsangaben (Class PublicationStatement) </li>
+ * 				<li>Identifier</li>
+ * 				<li>Medientypen (Class MediaType)</li>
+ * 			</ul>
+ * 		</li>
+ * 	</ul>
+ * </p>
+ * 
+ * @author Peter Schwery
+ * 
+ * 
+ * 
+ *
+ */
 public class Kim {
 
 	private Kim() {
@@ -47,6 +76,11 @@ public class Kim {
 		CreatorOrContributor creator = new CreatorOrContributor();
 		PublicationStatement publicationStatement = new PublicationStatement();
 		MediaType mediaType = new MediaType();
+		Relation relation = new Relation();
+		PhysicalDescription physicalDescription = new PhysicalDescription();
+		Edition edition = new Edition();
+		Language language = new Language();
+		SeriesStatement seriesStatement = new SeriesStatement();
 
 		try (OutputStream rdfXmlOutput = new FileOutputStream(var.fileRdfXml);
 				OutputStream rdfTurtleOutput = new FileOutputStream(
@@ -73,9 +107,18 @@ public class Kim {
 							.getVariableFields(Constants.KIM_CREATOR);
 					creator.toRdf(listVariableField, model, bibId);
 
+					// Ausgabebezeichnung
+					listVariableField = record.getVariableFields("250");
+					edition.toRdf(listVariableField, model, bibId);
+
+
 					// Orts-, Verlags- und Datumsangaben
 					listVariableField = record.getVariableFields("260");
 					publicationStatement.toRdf(listVariableField, model, bibId);
+
+					// Umfangsangabe
+					listVariableField = record.getVariableFields("300");
+					physicalDescription.toRdf(listVariableField, model, bibId);
 
 					// Medientypen
 					Leader leader = record.getLeader();
@@ -92,6 +135,22 @@ public class Kim {
 					} else {
 						// TODO: Bib-Id in Error-Log: Kein Feld 008
 					}
+					
+					// Relationen
+					listVariableField = record
+							.getVariableFields(Constants.KIM_RELATION);
+					relation.toRdf(listVariableField, model, bibId);
+
+					// Sprachen
+					listVariableField = record
+							.getVariableFields("041");
+					language.toRdf(f008, listVariableField, model, bibId);
+
+					// Gesamttitelangabe
+					listVariableField = record
+							.getVariableFields("490");
+					seriesStatement.toRdf(listVariableField, model, bibId);
+
 
 				} else {
 					// Ungültige BibId
@@ -111,6 +170,7 @@ public class Kim {
 			model.setNsPrefix(Constants.NS_RDA_CARRIERTYPE_PREFIX, Constants.NS_RDA_CARRIERTYPE);
 			model.setNsPrefix(Constants.NS_HELVETICAT_AUTH_PREFIX,
 					Constants.NS_HELVETICAT_AUTH);
+			model.setNsPrefix(Constants.NS_ISBD_ELEMENTS_PREFIX, Constants.NS_ISBD_ELEMENTS);
 			// model.setNsPrefix(Constants.NS_GND_PREFIX, Constants.NS_GND);
 			// model.write(System.out);
 			// RdfXml in Datei schreiben
@@ -127,8 +187,14 @@ public class Kim {
 		}
 	}
 
+	/**
+	 * <p>Initialisiert die Klasse Kim</p>
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+		
+		
 		new Kim();
 	}
 

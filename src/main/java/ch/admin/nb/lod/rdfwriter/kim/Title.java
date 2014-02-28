@@ -16,8 +16,22 @@ import com.hp.hpl.jena.vocabulary.DCTerms;
 import com.hp.hpl.jena.vocabulary.DC_11;
 import com.hp.hpl.jena.vocabulary.RDF;
 
+/**
+ * <h4>Titel</h4>
+ * <p>Der Hauptsachtitel wird aus $a ausgelesen (dc:title). Die Unterfelder $b, $n und $p werden als rda:otherTitleInformation ausgegeben.</p>
+ * <p>Verfasserangaben etc. aus $c werden nicht ausgegeben.</p>
+ *  
+* @author Peter Schwery
+ *  
+  *
+ */
 public class Title {
 
+	/**
+	 * @param listVariableField	Marc21-Felder 130, 210, 240, 245 und 246 
+	 * @param model				RDF-Model
+	 * @param id				Bib-Id
+	 */
 	public void toRdf(List<VariableField> listVariableField, Model model,
 			String id) {
 

@@ -22,8 +22,23 @@ import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.vocabulary.DCTerms;
 import com.hp.hpl.jena.vocabulary.DC_11;
 
+/**
+ * <h4>Personen und Körperschaften</h4>
+ * <p>Eine SPARQL-Query gleicht die Ansetzung aus den Marc21-Felder 100, 110, 111, 700, 710 und 711 mit NB-Autoritäten im RDF-Model ab.
+ *  Existiert ein entsprechender NB-Autoritätsdatensatz, wird die Auth-Id als Verknüpfung ausgegeben (dcterms),
+ *  sonst die Ansetzung als String (dc)</p>
+ *  
+* @author Peter Schwery
+ *  
+  *
+ */
 public class CreatorOrContributor {
 
+	/**
+	 * @param listVariableField Marc21-Felder: 100, 110, 111, 700, 710, 711
+	 * @param model 			RDF-Model
+	 * @param id 				Bib-Id
+	 */
 	public void toRdf(List<VariableField> listVariableField, Model model,
 			String id) {
 

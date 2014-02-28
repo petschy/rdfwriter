@@ -16,8 +16,23 @@ import com.hp.hpl.jena.vocabulary.DC;
 import com.hp.hpl.jena.vocabulary.DCTerms;
 import com.hp.hpl.jena.vocabulary.DC_11;
 
+/**
+ * <h4>Orts-, Verlags- und Datumsangaben</h4>
+ * <p>Wird eine Publikation von mehreren Verlagen an unterschiedlichen Verlagsorten herausgegeben, 
+ * ist eine Zuordnung, welche Verlags- und Ortsangaben zueinander gehören, nicht mehr möglich.
+ * Um Unschärfen im Falle von mehreren Verlags- und Ortsangaben zu vermeiden, wird zusätzlich ein Publication Statement
+ * nach ISBD ausgegeben.</p>
+ * 
+ * @author Peter Schwery
+ *
+ */
 public class PublicationStatement {
 
+	/**
+	 * @param listVariableField Marc21-Feld 260
+	 * @param model 			RDF-Model
+	 * @param id 				Bib-Id
+	 */
 	public void toRdf(List<VariableField> listVariableField, Model model,
 			String id) {
 		for (VariableField vf : listVariableField) {
