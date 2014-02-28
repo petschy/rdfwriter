@@ -69,7 +69,8 @@ public class Constants {
 	public static final String NS_RDA_PLACE_OF_PUBLICATION = "http://rdvocab.info/Elements/placeOfPublication";
 	public static final String NS_RDA_OTHER_TITLE_INFORMATION = "http://rdvocab.info/Elements/otherTitleInformation";
 	// RDARelationshipsWEMI
-	public static final String NS_RDA_WEMI_PREFIX_WEMI = "rdaRelationshipsWEMI";
+	public static final String NS_RDA_WEMI = "http://rdvocab.info/RDARelationshipsWEMI/";
+	public static final String NS_RDA_WEMI_PREFIX = "rdaRelationshipsWEMI";
 	public static final String NS_RDA_WEMI_PRECEDED_BY = "http://rdvocab.info/RDARelationshipsWEMI/precededBy";
 	public static final String NS_RDA_WEMI_SUCCEEDED_BY = "http://rdvocab.info/RDARelationshipsWEMI/succeededBy";
 	// Carriertype

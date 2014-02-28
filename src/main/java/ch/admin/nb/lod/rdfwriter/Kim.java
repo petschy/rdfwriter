@@ -168,6 +168,7 @@ public class Kim {
 			model.setNsPrefix(Constants.NS_DCTERMS_PREFIX, DCTerms.getURI());
 			model.setNsPrefix(Constants.NS_RDA_PREFIX, Constants.NS_RDA);
 			model.setNsPrefix(Constants.NS_RDA_CARRIERTYPE_PREFIX, Constants.NS_RDA_CARRIERTYPE);
+			model.setNsPrefix(Constants.NS_RDA_WEMI_PREFIX, Constants.NS_RDA_WEMI);
 			model.setNsPrefix(Constants.NS_HELVETICAT_AUTH_PREFIX,
 					Constants.NS_HELVETICAT_AUTH);
 			model.setNsPrefix(Constants.NS_ISBD_ELEMENTS_PREFIX, Constants.NS_ISBD_ELEMENTS);
