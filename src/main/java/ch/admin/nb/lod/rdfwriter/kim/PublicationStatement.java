@@ -86,7 +86,7 @@ public class PublicationStatement {
 				rdfSubject = model.createResource(Constants.NS_HELVETICAT_BIB
 						+ id);
 				rdfPredicate = model
-						.createProperty(Constants.NS_RDA_PLACE_OF_PUBLICATION);
+						.createProperty(Constants.NS_RDAU_PREFIX_PUBLICATION_STATEMENT);
 				model.add(rdfSubject, rdfPredicate, subfieldA);
 			}
 			
