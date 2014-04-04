@@ -4,8 +4,8 @@ import java.text.Normalizer;
 
 public class StringTool {
 
-	public static String cleanUp(String s){
-		
+	public static String cleanUp(String s) {
+
 		// Nicht druckbare Zeichen durch Leerzeichen ersetzen
 		s = s.replaceAll(Constants.NON_PRINTABLE_CHARACTERS, " ");
 		// Nichtsortierzeichen löschen
@@ -24,28 +24,40 @@ public class StringTool {
 		// Normalisieren NFC
 		s = Normalizer.normalize(s, Normalizer.Form.NFC);
 		return s;
-		
+
 	}
-	
+
 	/**
 	 * @param str
 	 * @param length
 	 * @param c
 	 * @return
 	 */
-	public static String rightPad(String str, Integer length, char c){
-		return str + String.format("%" + (length - str.length()) + "s", "").replace(" ", String.valueOf(c));
-		
+	public static String rightPad(String str, Integer length, char c) {
+		str = str.replaceAll("\\D", "");
+
+		return str
+				+ String.format("%" + (length - str.length()) + "s", "")
+						.replace(" ", String.valueOf(c));
+
 	}
+
 	/**
 	 * @param str
 	 * @param length
 	 * @param c
 	 * @return
 	 */
-	public static String leftPad(String str, Integer length, char c){
-		return String.format("%" + (length - str.length()) + "s", "").replace(" ", String.valueOf(c)) + str;
-		
+	public static String leftPad(String str, Integer length, char c) {
+		// alle nicht-Zahlen löschen
+		str = str.replaceAll("\\D", "");
+		// führende Nullen nur hinzufügen, wenn Länge < 9
+		if (length - str.length() > 0) {
+			return String.format("%" + (length - str.length()) + "s", "")
+					.replace(" ", String.valueOf(c)) + str;
+		} else {
+			return str;
+		}
+
 	}
 }
-
