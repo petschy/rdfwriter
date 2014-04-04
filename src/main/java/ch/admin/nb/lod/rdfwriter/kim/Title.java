@@ -67,7 +67,7 @@ public class Title {
 						sfNorP = StringTool.cleanUp(sfNorP);
 					}
 				}
-				// Triple bilden (ISBN13 ohne Bindestrich)
+				// Triple bilden für HST
 				rdfSubject = model.createResource(Constants.NS_HELVETICAT_BIB
 						+ id);
 				model.add(rdfSubject, DC_11.title, sfA);
@@ -77,14 +77,16 @@ public class Title {
 					rdfSubject = model
 							.createResource(Constants.NS_HELVETICAT_BIB + id);
 					rdfPredicate = model
-							.createProperty(Constants.NS_RDA_OTHER_TITLE_INFORMATION);
+							.createProperty(Constants.NS_RDAU_PREFIX_OTHER_TITLE_INFORMATION);
 					model.add(rdfSubject, rdfPredicate, sfB);
 				}
 				if (!sfNorP.equals("")) {
 					rdfSubject = model
 							.createResource(Constants.NS_HELVETICAT_BIB + id);
 					rdfPredicate = model
-							.createProperty(Constants.NS_RDA_OTHER_TITLE_INFORMATION);
+							.createProperty(Constants.NS_RDAU_PREFIX_OTHER_TITLE_INFORMATION);
+//					rdfPredicate = model
+//							.createProperty(Constants.NS_RDA_OTHER_TITLE_INFORMATION);
 					model.add(rdfSubject, rdfPredicate, sfNorP);
 				}
 				break;
