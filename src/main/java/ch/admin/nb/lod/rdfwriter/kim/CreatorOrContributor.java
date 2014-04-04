@@ -198,7 +198,6 @@ public class CreatorOrContributor {
 				}
 				data = StringTool.cleanUp(data);
 
-
 				data = queryModel(data, "preferredNameForTheConferenceOrEvent", model);
 
 				if (data.startsWith("http://nb.admin.ch")) {
@@ -220,6 +219,10 @@ public class CreatorOrContributor {
 	}
 
 	private String queryModel(String data, String arg, Model model) {
+		
+		// Anführungszeichen in Ansetzung löschen (-> Java-Exception)
+		data = data.replaceAll("\"", "");
+		
 
 		String queryString = "PREFIX nbo" + ": <"
 				+ "http://nb.admin.ch/lod/ontology#" + "> \n"
