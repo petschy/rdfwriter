@@ -17,6 +17,7 @@ import org.marc4j.marc.VariableField;
 
 import ch.admin.nb.lod.rdfwriter.kim.CreatorOrContributor;
 import ch.admin.nb.lod.rdfwriter.kim.Edition;
+import ch.admin.nb.lod.rdfwriter.kim.Identifier;
 import ch.admin.nb.lod.rdfwriter.kim.Language;
 import ch.admin.nb.lod.rdfwriter.kim.MediaType;
 import ch.admin.nb.lod.rdfwriter.kim.PhysicalDescription;
@@ -81,6 +82,7 @@ public class Kim {
 		Edition edition = new Edition();
 		Language language = new Language();
 		SeriesStatement seriesStatement = new SeriesStatement();
+		Identifier identifier = new Identifier();
 
 		try (OutputStream rdfXmlOutput = new FileOutputStream(var.fileRdfXml);
 				OutputStream rdfTurtleOutput = new FileOutputStream(
@@ -150,6 +152,10 @@ public class Kim {
 					listVariableField = record
 							.getVariableFields("490");
 					seriesStatement.toRdf(listVariableField, model, bibId);
+					
+					// Identifier
+					listVariableField = record.getVariableFields(Constants.KIM_IDENTIFIER);
+					identifier.toRdf(listVariableField, model, bibId);
 
 
 				} else {
@@ -169,9 +175,12 @@ public class Kim {
 			model.setNsPrefix(Constants.NS_RDA_PREFIX, Constants.NS_RDA);
 			model.setNsPrefix(Constants.NS_RDA_CARRIERTYPE_PREFIX, Constants.NS_RDA_CARRIERTYPE);
 			model.setNsPrefix(Constants.NS_RDA_WEMI_PREFIX, Constants.NS_RDA_WEMI);
+			model.setNsPrefix(Constants.NS_RDAU_PREFIX, Constants.NS_RDAU);
 			model.setNsPrefix(Constants.NS_HELVETICAT_AUTH_PREFIX,
 					Constants.NS_HELVETICAT_AUTH);
 			model.setNsPrefix(Constants.NS_ISBD_ELEMENTS_PREFIX, Constants.NS_ISBD_ELEMENTS);
+			model.setNsPrefix(Constants.NS_UMBEL_PREFIX, Constants.NS_UMBEL);
+			model.setNsPrefix(Constants.NS_RDA_MEDIATYPE_PREFIX, Constants.NS_RDA_MEDIATYPE);
 			// model.setNsPrefix(Constants.NS_GND_PREFIX, Constants.NS_GND);
 			// model.write(System.out);
 			// RdfXml in Datei schreiben
