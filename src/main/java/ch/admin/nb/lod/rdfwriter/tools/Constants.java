@@ -14,12 +14,12 @@ public class Constants {
 	public static final String[] F7XX = { "700", "710", "711", "730" };
 
 	// DINI-AG-KIM
-	public static final String[] KIM_TITLE = { "245", "130", "240", "210",
+	public static final String[] KIM_TITLE = { "130", "210", "240","245",
 			"246" };
 	public static final String[] KIM_CREATOR = { "100", "110", "111", "700",
 			"710", "711" };
-
-	public static final String[] KIM_RELATION = { "770", "774", "775", "773", "776", "780", "785", "800", "810", "811", "830"};
+	public static final String[] KIM_RELATION = { "770", "773", "774", "775", "776", "780", "785", "800", "810", "811", "830"};
+	public static final String[] KIM_IDENTIFIER = { "020", "022", "024", "030", "035"};
 	
 	// Dublin Core
 	public static final String NS_DC_PREFIX = "dc";
@@ -28,6 +28,8 @@ public class Constants {
 	// Bibliographic Ontology (bibo)
 	public static final String NS_BIBO = "http://purl.org/ontology/bibo/";
 	public static final String NS_BIBO_PREFIX = "bibo";
+	public static final String NS_BIBO_ISBN = "http://purl.org/ontology/bibo/isbn";
+	public static final String NS_BIBO_ISSN = "http://purl.org/ontology/bibo/issn";
 	public static final String NS_BIBO_ISBN10 = "http://purl.org/ontology/bibo/isbn10";
 	public static final String NS_BIBO_ISBN13 = "http://purl.org/ontology/bibo/isbn13";
 	public static final String NS_BIBO_SHORT_TITLE = "http://purl.org/ontology/bibo/shortTitle";
@@ -38,6 +40,11 @@ public class Constants {
 	public static final String NS_BIBO_ARTICLE = "http://purl.org/ontology/bibo/Article";
 	public static final String NS_BIBO_ISSUE = "http://purl.org/ontology/bibo/Issue";
 	public static final String NS_BIBO_EDITION = "http://purl.org/ontology/bibo/edition";
+	public static final String NS_BIBO_CODEN = "http://purl.org/ontology/bibo/coden";
+	public static final String NS_BIBO_COLLECTION = "http://purl.org/ontology/bibo/Collection";
+	public static final String NS_BIBO_DOCUMENT = "http://purl.org/ontology/bibo/Document";
+	public static final String NS_BIBO_AUDIODOCUMENT = "http://purl.org/ontology/bibo/AudioDocument";
+	public static final String NS_BIBO_IMAGE = "http://purl.org/ontology/bibo/Image";
 
 	// Helveticat
 	// Titeldaten (helveticatBib)
@@ -80,6 +87,18 @@ public class Constants {
 	public static final String NS_RDA_CARRIERTYPE_MICROFORM = "http://rdvocab.info/termList/RDAMediaType/1002";
 	public static final String NS_RDA_CARRIERTYPE_ONLINERESOURCE = "http://rdvocab.info/termList/RDACarrierType/1018";
 	public static final String NS_RDA_CARRIERTYPE_COMPUTER = "http://rdvocab.info/termList/RDACarrierType/1010";
+	// Elements/u
+	public static final String NS_RDAU = "http://rdaregistry.info/Elements/u/";
+	public static final String NS_RDAU_PREFIX = "rdau";
+	public static final String NS_RDAU_PREFIX_OTHER_TITLE_INFORMATION = "http://rdaregistry.info/Elements/u/P60493";
+	public static final String NS_RDAU_PREFIX_PUBLICATION_STATEMENT = "http://rdaregistry.info/Elements/u/P60333";
+	public static final String NS_RDAU_PREFIX_PRECEDED_BY = "http://rdaregistry.info/Elements/u/P60261";
+	public static final String NS_RDAU_PREFIX_SUCCEEDED_BY = "http://rdaregistry.info/Elements/u/P60278";
+	// Mediatype
+	public static final String NS_RDA_MEDIATYPE = "http://rdvocab.info/termList/RDAMediaType/";
+	public static final String NS_RDA_MEDIATYPE_PREFIX = "rdaMediatype";
+	public static final String NS_RDA_MEDIATYPE_AUDIO = "http://rdvocab.info/termList/RDAMediaType/1001";
+
 
 	// GND
 	public static final String NS_GND = "http://d-nb.info/gnd/";
@@ -102,6 +121,18 @@ public class Constants {
 	
 	// LOC
 	public static final String NS_MARC_LANGUAGES = "http://id.loc.gov/vocabulary/languages/";
+	
+	// Umbel
+	public static final String NS_UMBEL = "http://umbel.org/umbel#";
+	public static final String NS_UMBEL_PREFIX = "umbel";
+	public static final String NS_UMBEL_ISLIKE = "http://umbel.org/umbel#isLike";
+	
+	// DOI
+	public static final String NS_DOI = "http://dx.doi.org/";
+		
+	// URN
+	public static final String NS_URN = "http://nbn-resolving.de/";
+	
 	
 	
 }
