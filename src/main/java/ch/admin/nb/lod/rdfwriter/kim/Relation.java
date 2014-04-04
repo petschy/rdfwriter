@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.commons.codec.binary.StringUtils;
 import org.marc4j.marc.DataField;
+import org.marc4j.marc.Subfield;
 import org.marc4j.marc.VariableField;
 
 import ch.admin.nb.lod.rdfwriter.tools.Constants;
@@ -17,18 +18,25 @@ import com.hp.hpl.jena.vocabulary.DC_11;
 
 /**
  * <h4>Relationen</h4>
- * <p>Unterfeld $w aus den Verknüpfungs-Feldern 77X und 78X und den Gesamttitel-Feldern 8XX wird als URI ausgegeben.</p>
- *  
-* @author Peter Schwery
- *  
-  *
+ * <p>
+ * Unterfeld $w aus den Verknüpfungs-Feldern 77X und 78X und den
+ * Gesamttitel-Feldern 8XX wird als URI ausgegeben.
+ * </p>
+ * 
+ * @author Peter Schwery
+ * 
+ * 
  */
 public class Relation {
 
 	/**
-	 * @param listVariableField	Marc21-Felder 770, 773, 774, 775, 776, 780, 785, 800, 810, 811, 830
-	 * @param model 			RDF-Model
-	 * @param id 				Bib-Id
+	 * @param listVariableField
+	 *            Marc21-Felder 770, 773, 774, 775, 776, 780, 785, 800, 810,
+	 *            811, 830
+	 * @param model
+	 *            RDF-Model
+	 * @param id
+	 *            Bib-Id
 	 */
 	public void toRdf(List<VariableField> listVariableField, Model model,
 			String id) {
@@ -43,6 +51,19 @@ public class Relation {
 			String tag = df.getTag();
 			String data = "";
 
+			if (tag.equals("773")) {
+				List<Subfield> listSubfields = df.getSubfields();
+				for (Subfield sf : listSubfields) {
+					// String s = sf.getData().replaceAll("( *)$", "$1");
+					if (sf.getCode() != 'w') {
+						data = data.concat(" ").concat(sf.getData());
+					}
+				}
+				data = StringTool.cleanUp(data);
+				model.add(rdfSubject, DCTerms.bibliographicCitation, data);
+				data = "";
+			}
+			
 			if (df.getSubfield('w') != null) {
 
 				switch (tag) {
@@ -66,7 +87,7 @@ public class Relation {
 				case "775":
 					data = df.getSubfield('w').getData();
 					data = StringTool.leftPad(data, 9, '0');
-					
+
 					model.add(rdfSubject, DCTerms.hasVersion,
 							Constants.NS_HELVETICAT_BIB + data);
 
@@ -92,7 +113,7 @@ public class Relation {
 					data = df.getSubfield('w').getData();
 					data = StringTool.leftPad(data, 9, '0');
 					rdfPredicate = model
-							.createProperty(Constants.NS_RDA_WEMI_PRECEDED_BY);
+							.createProperty(Constants.NS_RDAU_PREFIX_PRECEDED_BY);
 
 					model.add(rdfSubject, rdfPredicate,
 							Constants.NS_HELVETICAT_BIB + data);
@@ -103,7 +124,7 @@ public class Relation {
 					data = df.getSubfield('w').getData();
 					data = StringTool.leftPad(data, 9, '0');
 					rdfPredicate = model
-							.createProperty(Constants.NS_RDA_WEMI_SUCCEEDED_BY);
+							.createProperty(Constants.NS_RDAU_PREFIX_SUCCEEDED_BY);
 
 					model.add(rdfSubject, rdfPredicate,
 							Constants.NS_HELVETICAT_BIB + data);
@@ -135,10 +156,10 @@ public class Relation {
 					break;
 
 				case "830":
-						data = df.getSubfield('w').getData();
-						data = StringTool.leftPad(data, 9, '0');
-						model.add(rdfSubject, DCTerms.isPartOf,
-								Constants.NS_HELVETICAT_BIB + data);
+					data = df.getSubfield('w').getData();
+					data = StringTool.leftPad(data, 9, '0');
+					model.add(rdfSubject, DCTerms.isPartOf,
+							Constants.NS_HELVETICAT_BIB + data);
 					break;
 
 				}
