@@ -58,7 +58,7 @@ public class Title {
 					if (sf.getCode() == 'a') {
 						sfA = sf.getData();
 						sfA = StringTool.cleanUp(sfA);
-						System.out.println(sfA);
+//						System.out.println(sfA);
 					} else if (sf.getCode() == 'b') {
 						sfB = sf.getData();
 						sfB = StringTool.cleanUp(sfB);

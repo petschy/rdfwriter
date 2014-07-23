@@ -39,7 +39,7 @@ public class Identifier {
 			Resource rdfSubject;
 			Property rdfPredicate;
 			Resource rdfObject;
-			System.out.println(df.toString());
+//			System.out.println(df.toString());
 			switch (tag) {
 
 			case "020":
@@ -83,7 +83,7 @@ public class Identifier {
 
 							data = df.getSubfield('a').getData();
 							
-							System.out.println(data);
+//							System.out.println(data);
 							data = StringTool.cleanUp(data);
 							rdfSubject = model
 									.createResource(Constants.NS_HELVETICAT_BIB

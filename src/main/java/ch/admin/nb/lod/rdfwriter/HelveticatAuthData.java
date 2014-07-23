@@ -40,17 +40,18 @@ public class HelveticatAuthData {
 		Variables var = new Variables();
 
 		try (InputStream input = new FileInputStream(var.fileMrcAuthIn);) {
-
+			int recordCounter = 1;
 			MarcReader reader = new MarcStreamReader(input);
 			while (reader.hasNext()) {
 				Record record = reader.next();
-				System.out.println(record);
+//				System.out.println(record);
 
 				String id;
 				id = record.getControlNumber();
+				System.out.println("Auth-Record no. " + recordCounter + ": " + id);
 				// Nur Datensätze mit gültiger BibId verarbeiten
 				if ((id.length() == 13) && id.substring(0, 4).equals("vtls")) {
-					id = id.replace("vtls", "");
+					id = id.replace("vtls", "sz");
 					// Marc-Felder-Liste
 					List<VariableField> listField1XX;
 					List<VariableField> listField999;
@@ -190,7 +191,7 @@ public class HelveticatAuthData {
 					// TODO Ungültige BibId in Datei schreiben
 
 				}
-
+				recordCounter++;
 			}
 
 		} catch (FileNotFoundException e) {

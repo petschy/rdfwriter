@@ -16,8 +16,27 @@ import com.hp.hpl.jena.vocabulary.RDF;
 
 public class MediaType {
 
-	// Feld 007 ist nicht vorhanden
-	public void toRdf(Leader leader, ControlField f008, Model model, String id) {
+	Boolean isBiboDocument;
+	char typeOfRecord;
+	char bibLevel;
+	char multipart;
+	String f008pos21;
+	String f008pos7to14;
+
+	public void toRdf(Leader leader, ControlField f007, ControlField f008,
+			Model model, String id) {
+
+		// Kein Leader -> Bib-Id in Log-Datei schreiben und abbrechen
+		if (leader == null) {
+			// TODO Log-Datei schreiben
+			return;
+		}
+
+		// Kein Feld 008 -> Bib-Id in Log-Datei schreiben und abbrechen
+		if (f008 == null) {
+			// TODO Log-Datei schreiben
+			return;
+		}
 
 		Resource rdfSubject;
 		Property rdfPredicate;
@@ -25,466 +44,121 @@ public class MediaType {
 
 		rdfSubject = model.createResource(Constants.NS_HELVETICAT_BIB + id);
 
+		// Variable für bibo:document
+		isBiboDocument = true;
 		// Leader 06: Type of Record
-		char typeOfRecord = leader.getTypeOfRecord();
+		typeOfRecord = leader.getTypeOfRecord();
 		// Leader 07: Bibliographic Level
 		char[] implDefined1 = leader.getImplDefined1();
-		char bibLevel = implDefined1[0];
+		bibLevel = implDefined1[0];
 		// Leader 19: Multipart resource record level
 		char[] implDefined2 = leader.getImplDefined2();
-		char multipart = implDefined2[2];
-		// 008/21: Type of continuing resource
-		String data008 = f008.getData();
-		String data008pos21 = data008.substring(21, 22);
+		multipart = implDefined2[2];
+		// Feld 008/21
+		f008pos21 = f008.getData().substring(21, 22);
+		f008pos7to14 = f008.getData().substring(7, 15);
 
-		// Leader 06: Type of Record
-		switch (typeOfRecord) {
+//		System.out.println("isBiboDocument: " + isBiboDocument);
 
-		// a - Language material
-		case 'a':
-			model.add(rdfSubject, DCTerms.medium,
-					Constants.NS_RDA_CARRIERTYPE_UNMEDIATED);
+		if (f007 == null) {
+			// Kein Feld 007
+			_checkLeader(model, rdfSubject);
 
-			break;
-		// c - Notated music
-		case 'c':
-			model.add(rdfSubject, DCTerms.medium,
-					Constants.NS_RDA_CARRIERTYPE_UNMEDIATED);
-			break;
-		// d - Manuscript notated music
-		case 'd':
-			model.add(rdfSubject, DCTerms.medium,
-					Constants.NS_RDA_CARRIERTYPE_UNMEDIATED);
-			break;
-		// e - Cartographic material
-		case 'e':
-			model.add(rdfSubject, DCTerms.medium,
-					Constants.NS_RDA_CARRIERTYPE_UNMEDIATED);
-			model.add(rdfSubject, RDF.type, Constants.NS_BIBO_MAP);
-			break;
-		// f - Manuscript cartographic material
-		case 'f':
-			model.add(rdfSubject, DCTerms.medium,
-					Constants.NS_RDA_CARRIERTYPE_UNMEDIATED);
-			model.add(rdfSubject, RDF.type, Constants.NS_BIBO_MAP);
-			break;
-		// g - Projected medium
-		case 'g':
-			model.add(rdfSubject, RDF.type, Constants.NS_BIBO_AUDIOVISUAL);
-			break;
-		// i - Nonmusical sound recording
-		case 'i':
-			model.add(rdfSubject, RDF.type, Constants.NS_BIBO_AUDIODOCUMENT);
-			model.add(rdfSubject, DCTerms.medium,
-					Constants.NS_RDA_MEDIATYPE_AUDIO);
-			break;
-		// j - Musical sound recording
-		case 'j':
-			model.add(rdfSubject, RDF.type, Constants.NS_BIBO_AUDIODOCUMENT);
-			model.add(rdfSubject, DCTerms.medium,
-					Constants.NS_RDA_MEDIATYPE_AUDIO);
-			break;
-		// k - Two-dimensional nonprojectable graphic
-		case 'k':
-			model.add(rdfSubject, RDF.type, Constants.NS_BIBO_IMAGE);
-			model.add(rdfSubject, DCTerms.medium,
-					Constants.NS_RDA_CARRIERTYPE_UNMEDIATED);
-			break;
-		// m - Computer file
-		case 'm':
+		} else {
+			_checkLeader(model, rdfSubject);
 
-			break;
-		// o - Kit
-		case 'o':
-			model.add(rdfSubject, RDF.type, Constants.NS_BIBO_AUDIOVISUAL);
-			model.add(rdfSubject, DCTerms.medium,
-					Constants.NS_ISBD_MEDIATYPE_MULTIMEDIA);
-			break;
-		// o - Medienkombination
-		case 'p':
-			model.add(rdfSubject, RDF.type, Constants.NS_BIBO_AUDIOVISUAL);
-			model.add(rdfSubject, DCTerms.medium,
-					Constants.NS_ISBD_MEDIATYPE_MULTIMEDIA);
-			break;
-		// r - Three-dimensional artifact
-		case 'r':
-			model.add(rdfSubject, DCTerms.medium,
-					Constants.NS_RDA_CARRIERTYPE_UNMEDIATED);
-			break;
-		// r - Manuscript
-		case 't':
-			model.add(rdfSubject, DCTerms.medium,
-					Constants.NS_RDA_CARRIERTYPE_UNMEDIATED);
-			break;
+			String f007pos1 = f007.getData().substring(0, 1);
+			String f007pos2 = f007.getData().substring(1, 2);
+			String f007pos1to2 = f007.getData().substring(0, 2);
 
-		default:
-			break;
-		}
+			if (f007pos1.equals("f")) {
+				// "f" = Tactile material
+				isBiboDocument = false;
+				model.add(rdfSubject, DCTerms.medium, Constants.NS_LIB_BRAILLE);
+			}
 
-		switch (bibLevel) {
+			if (f007pos1to2.equals("co")) {
+				model.add(rdfSubject, DCTerms.medium,
+						Constants.NS_RDA_CARRIERTYPE_ONLINERESOURCE);
+//				System.out.println(f007pos1to2);
 
-		// Monographic component part
-		case 'a':
-			model.add(rdfSubject, RDF.type, Constants.NS_BIBO_ARTICLE);
-			break;
-		// Serial component part
-		case 'b':
-			model.add(rdfSubject, RDF.type, Constants.NS_BIBO_ISSUE);
-			break;
-		// Collection
-		case 'c':
-			model.add(rdfSubject, RDF.type, Constants.NS_BIBO_COLLECTION);
-			break;
-		// Subunit
-		case 'd':
-			break;
-		// Integrating resource
-		case 'i':
-			break;
-		// Monograph/Item
-		case 'm':
-			model.add(rdfSubject, RDF.type, Constants.NS_BIBO_DOCUMENT);
-			break;
-		// Serial
-		case 's':
+			} else if (f007pos1to2.equals("cr")) {
+				model.add(rdfSubject, DCTerms.medium,
+						Constants.NS_RDA_CARRIERTYPE_COMPUTER);
 
-			switch (data008pos21) {
-			// # - None of the following
-			case " ":
-				model.add(rdfSubject, RDF.type, Constants.NS_BIBO_PERIODICAL);
-				break;
-			// d - Updating database
-			case "d":
-				model.add(rdfSubject, RDF.type, Constants.NS_BIBO_PERIODICAL);
-				break;
-			// l - Updating loose-leaf
-			case "l":
-				model.add(rdfSubject, RDF.type, Constants.NS_BIBO_PERIODICAL);
-				break;
-			// m - Monographic series
-			case "m":
-				model.add(rdfSubject, RDF.type, Constants.NS_BIBO_SERIES);
-				break;
-			// n - Newspaper
-			case "n":
-				model.add(rdfSubject, RDF.type, Constants.NS_BIBO_PERIODICAL);
-				break;
-			// p - Periodical
-			case "p":
-				model.add(rdfSubject, RDF.type, Constants.NS_BIBO_PERIODICAL);
-				break;
-			// w - Updating Web site
-			case "w":
-				model.add(rdfSubject, RDF.type, Constants.NS_BIBO_PERIODICAL);
-				break;
-			// | - No attempt to code
-			case "|":
-				model.add(rdfSubject, RDF.type, Constants.NS_BIBO_PERIODICAL);
-				break;
-
-			default:
-				model.add(rdfSubject, RDF.type, Constants.NS_BIBO_PERIODICAL);
-				break;
+			} else if (f007pos1to2.equals("ou")) {
+				model.add(rdfSubject, DCTerms.medium,
+						Constants.NS_ISBD_MEDIATYPE_MULTIMEDIA);
 
 			}
 
-			break;
+		}
 
-		default:
-			break;
+		if (isBiboDocument == true) {
+			model.add(rdfSubject, DCTerms.medium, Constants.NS_BIBO_DOCUMENT);
 
 		}
 	}
 
-	// Feld 007 ist vorhanden
-	public void toRdf(Leader leader, ControlField f007, ControlField f008,
-			Model model, String id) {
+	private void _checkLeader(Model model, Resource rdfSubject) {
+		if (typeOfRecord == 'a') {
+			// 'a' = Language material
 
-		Resource rdfSubject;
-		Property rdfPredicate;
-		Resource rdfObject;
-
-		rdfSubject = model.createResource(Constants.NS_HELVETICAT_BIB + id);
-
-		// Leader 06: Type of Record
-		char typeOfRecord = leader.getTypeOfRecord();
-		// Leader 07: Bibliographic Level
-		char[] implDefined1 = leader.getImplDefined1();
-		char bibLevel = implDefined1[0];
-		// Leader 19: Multipart resource record level
-		char[] implDefined2 = leader.getImplDefined2();
-		char multipart = implDefined2[2];
-		// 008/21: Type of continuing resource
-		String data008 = f008.getData();
-		String data008pos21 = data008.substring(21, 22);
-		// 007
-		String data007 = f007.getData();
-		String data007pos00 = data007.substring(0, 1);
-		String data007pos01 = data007.substring(1, 2);
-
-		// Leader 06: Type of Record
-		switch (typeOfRecord) {
-
-		// a - Language material
-		case 'a':
 			model.add(rdfSubject, DCTerms.medium,
 					Constants.NS_RDA_CARRIERTYPE_UNMEDIATED);
 
-			break;
-		// c - Notated music
-		case 'c':
-			model.add(rdfSubject, DCTerms.medium,
-					Constants.NS_RDA_CARRIERTYPE_UNMEDIATED);
-			break;
-		// d - Manuscript notated music
-		case 'd':
-			model.add(rdfSubject, DCTerms.medium,
-					Constants.NS_RDA_CARRIERTYPE_UNMEDIATED);
-			break;
-		// e - Cartographic material
-		case 'e':
-			model.add(rdfSubject, DCTerms.medium,
-					Constants.NS_RDA_CARRIERTYPE_UNMEDIATED);
-			model.add(rdfSubject, RDF.type, Constants.NS_BIBO_MAP);
-			break;
-		// f - Manuscript cartographic material
-		case 'f':
-			model.add(rdfSubject, DCTerms.medium,
-					Constants.NS_RDA_CARRIERTYPE_UNMEDIATED);
-			model.add(rdfSubject, RDF.type, Constants.NS_BIBO_MAP);
-			break;
-		// g - Projected medium
-		case 'g':
-			model.add(rdfSubject, RDF.type, Constants.NS_BIBO_AUDIOVISUAL);
-			break;
-		// i - Nonmusical sound recording
-		case 'i':
-			model.add(rdfSubject, RDF.type, Constants.NS_BIBO_AUDIODOCUMENT);
-			model.add(rdfSubject, DCTerms.medium,
-					Constants.NS_RDA_MEDIATYPE_AUDIO);
-			break;
-		// j - Musical sound recording
-		case 'j':
-			model.add(rdfSubject, RDF.type, Constants.NS_BIBO_AUDIODOCUMENT);
-			model.add(rdfSubject, DCTerms.medium,
-					Constants.NS_RDA_MEDIATYPE_AUDIO);
-			break;
-		// k - Two-dimensional nonprojectable graphic
-		case 'k':
-			model.add(rdfSubject, RDF.type, Constants.NS_BIBO_IMAGE);
-			model.add(rdfSubject, DCTerms.medium,
-					Constants.NS_RDA_CARRIERTYPE_UNMEDIATED);
-			break;
-		// m - Computer file
-		case 'm':
+		} else if (typeOfRecord == 'g') {
+			// 'g' = Projected medium
 
-			break;
-		// o - Kit
-		case 'o':
-			model.add(rdfSubject, RDF.type, Constants.NS_BIBO_AUDIOVISUAL);
-			model.add(rdfSubject, DCTerms.medium,
-					Constants.NS_ISBD_MEDIATYPE_MULTIMEDIA);
-			break;
-		// o - Medienkombination
-		case 'p':
-			model.add(rdfSubject, RDF.type, Constants.NS_BIBO_AUDIOVISUAL);
-			model.add(rdfSubject, DCTerms.medium,
-					Constants.NS_ISBD_MEDIATYPE_MULTIMEDIA);
-			break;
-		// r - Three-dimensional artifact
-		case 'r':
-			model.add(rdfSubject, DCTerms.medium,
-					Constants.NS_RDA_CARRIERTYPE_UNMEDIATED);
-			break;
-		// r - Manuscript
-		case 't':
-			model.add(rdfSubject, DCTerms.medium,
-					Constants.NS_RDA_CARRIERTYPE_UNMEDIATED);
-			break;
+			isBiboDocument = false;
+			model.add(rdfSubject, DCTerms.medium, Constants.NS_BIBO_AUDIOVISUAL);
 
-		default:
-			break;
-		}
+		} else if (typeOfRecord == 'e') {
+			// 'e' = Cartographic material
 
-		switch (bibLevel) {
+			isBiboDocument = false;
+			model.add(rdfSubject, DCTerms.medium, Constants.NS_BIBO_MAP);
 
-		// Monographic component part
-		case 'a':
-			model.add(rdfSubject, RDF.type, Constants.NS_BIBO_ARTICLE);
-			break;
-		// Serial component part
-		case 'b':
-			model.add(rdfSubject, RDF.type, Constants.NS_BIBO_ISSUE);
-			break;
-		// Collection
-		case 'c':
-			model.add(rdfSubject, RDF.type, Constants.NS_BIBO_COLLECTION);
-			break;
-		// Subunit
-		case 'd':
-			break;
-		// Integrating resource
-		case 'i':
-			break;
-		// Monograph/Item
-		case 'm':
-			model.add(rdfSubject, RDF.type, Constants.NS_BIBO_DOCUMENT);
-			break;
-		// Serial
-		case 's':
-
-			switch (data008pos21) {
-			// # - None of the following
-			case " ":
-				model.add(rdfSubject, RDF.type, Constants.NS_BIBO_PERIODICAL);
-				break;
-			// d - Updating database
-			case "d":
-				model.add(rdfSubject, RDF.type, Constants.NS_BIBO_PERIODICAL);
-				break;
-			// l - Updating loose-leaf
-			case "l":
-				model.add(rdfSubject, RDF.type, Constants.NS_BIBO_PERIODICAL);
-				break;
-			// m - Monographic series
-			case "m":
-				model.add(rdfSubject, RDF.type, Constants.NS_BIBO_SERIES);
-				break;
-			// n - Newspaper
-			case "n":
-				model.add(rdfSubject, RDF.type, Constants.NS_BIBO_PERIODICAL);
-				break;
-			// p - Periodical
-			case "p":
-				model.add(rdfSubject, RDF.type, Constants.NS_BIBO_PERIODICAL);
-				break;
-			// w - Updating Web site
-			case "w":
-				model.add(rdfSubject, RDF.type, Constants.NS_BIBO_PERIODICAL);
-				break;
-			// | - No attempt to code
-			case "|":
-				model.add(rdfSubject, RDF.type, Constants.NS_BIBO_PERIODICAL);
-				break;
-
-			default:
-				model.add(rdfSubject, RDF.type, Constants.NS_BIBO_PERIODICAL);
-				break;
-
-			}
-
-			break;
-
-		default:
-			break;
+//			System.out.println("Map -> isBiboDocument: " + isBiboDocument);
 
 		}
 
-		switch (data007pos00) {
+		if (bibLevel == 'a') {
+			// 'a' = Monographic component part
 
-		// Map
-		case "a":
-			break;
-		// Electronic resource
-		case "c":
-			switch (data007pos01) {
-//			// a - Tape cartridge
-//			case "a":
-//				break;
-//			// b - Chip cartridge
-//			case "b":
-//				break;
-//			// c - Computer optical disc cartridge
-//			case "c":
-//				break;
-//			// d - Computer disc, type unspecified
-//			case "d":
-//				break;
-//			// e - Computer disc cartridge, type unspecified
-//			case "e":
-//				break;
-//			// f - Tape cassette
-//			case "f":
-//				break;
-//			// h - Tape reel
-//			case "h":
-//				break;
-//			// j - Magnetic disk
-//			case "j":
-//				break;
-//			// k - Computer card
-//			case "k":
-//				break;
-//			// m - Magneto-optical disc
-//			case "m":
-//				break;
-//			// o - Optical disc
-//			case "o":
-//				break;
-			// r - Remote
-			case "r":
-				model.add(rdfSubject, RDF.type,
-						Constants.NS_RDA_CARRIERTYPE_ONLINERESOURCE);
-				break;
-//			// u - Unspecified
-//			case "u":
-//				break;
-//			// z - Other
-//			case "z":
-//				break;
-//			// | - No attempt to code
-//			case "|":
-//				break;
-			default:
-				model.add(rdfSubject, RDF.type,
-						Constants.NS_RDA_CARRIERTYPE_COMPUTER);
-				break;
+			isBiboDocument = false;
+			model.add(rdfSubject, DCTerms.medium, Constants.NS_BIBO_ARTICLE);
+
+		} else if (bibLevel == 'b') {
+			// 'b' = Serial component part
+
+			isBiboDocument = false;
+			model.add(rdfSubject, DCTerms.medium, Constants.NS_BIBO_ISSUE);
+
+		} else if (bibLevel == 's') {
+			// 's' = Serial
+
+			model.add(rdfSubject, DCTerms.issued, f008pos7to14);
+//			System.out.println("Issued: " + f008pos7to14);
+
+			isBiboDocument = false;
+			if (f008pos21 == "m") {
+				model.add(rdfSubject, DCTerms.medium, Constants.NS_BIBO_SERIES);
+
+			} else {
+				model.add(rdfSubject, DCTerms.medium,
+						Constants.NS_BIBO_PERIODICAL);
 
 			}
-			break;
-		// Globe
-		case "d":
-			break;
-		// Tactile material
-		case "f":
-			model.add(rdfSubject, RDF.type, Constants.NS_LIB_BRAILLE);
-			break;
-		// Projected graphic
-		case "g":
-			break;
-		// Microform
-		case "h":
-			model.add(rdfSubject, RDF.type,
-					Constants.NS_RDA_CARRIERTYPE_MICROFORM);
-			break;
-		// Nonprojected graphic
-		case "k":
-			break;
-		// Motion picture
-		case "m":
-			break;
-		// Kit
-		case "o":
-			model.add(rdfSubject, RDF.type, Constants.NS_LIB_BRAILLE);
-			break;
-		// Notated music
-		case "q":
-			break;
-		// Remote-sensing image
-		case "r":
-			break;
-		// Sound recording
-		case "s":
-			break;
-		// Text
-		case "t":
-			break;
-		// Videorecording
-		case "v":
-			break;
-		// Unspecified
-		case "z":
-			break;
+
+		}
+
+		if (multipart == 'a') {
+			// 'a' = Set
+
+			isBiboDocument = false;
+			model.add(rdfSubject, DCTerms.medium, Constants.NS_BIBO_COLLECTION);
+
 		}
 
 	}

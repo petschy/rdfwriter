@@ -20,6 +20,7 @@ public class Constants {
 			"710", "711" };
 	public static final String[] KIM_RELATION = { "770", "773", "774", "775", "776", "780", "785", "800", "810", "811", "830"};
 	public static final String[] KIM_IDENTIFIER = { "020", "022", "024", "030", "035"};
+	public static final String[] KIM_SERIES_STATEMENT = { "440", "490"};
 	
 	// Dublin Core
 	public static final String NS_DC_PREFIX = "dc";
@@ -48,10 +49,10 @@ public class Constants {
 
 	// Helveticat
 	// Titeldaten (helveticatBib)
-	public static final String NS_HELVETICAT_BIB = "http://nb.admin.ch/lod/helveticat/bib/";
+	public static final String NS_HELVETICAT_BIB = "http://permalink/snl.ch/bib/";
 	public static final String NS_HELVETICAT_BIB_PREFIX = "helveticatBib";
 	// Normdaten (helveticatAuth)
-	public static final String NS_HELVETICAT_AUTH = "http://nb.admin.ch/lod/helveticat/auth/";
+	public static final String NS_HELVETICAT_AUTH = "http://permalink/snl.ch/auth/";
 	public static final String NS_HELVETICAT_AUTH_PREFIX = "helveticatAuth";
 
 	// NB Ontology (nbo)
@@ -92,6 +93,7 @@ public class Constants {
 	public static final String NS_RDAU_PREFIX = "rdau";
 	public static final String NS_RDAU_PREFIX_OTHER_TITLE_INFORMATION = "http://rdaregistry.info/Elements/u/P60493";
 	public static final String NS_RDAU_PREFIX_PUBLICATION_STATEMENT = "http://rdaregistry.info/Elements/u/P60333";
+	public static final String NS_RDAU_PREFIX_PLACE_OF_PUBLICATION = "http://rdaregistry.info/Elements/u/P60163";
 	public static final String NS_RDAU_PREFIX_PRECEDED_BY = "http://rdaregistry.info/Elements/u/P60261";
 	public static final String NS_RDAU_PREFIX_SUCCEEDED_BY = "http://rdaregistry.info/Elements/u/P60278";
 	// Mediatype

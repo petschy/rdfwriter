@@ -30,6 +30,7 @@ import ch.admin.nb.lod.rdfwriter.tools.Variables;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
+import com.hp.hpl.jena.rdf.model.ModelMaker;
 import com.hp.hpl.jena.vocabulary.DCTerms;
 import com.hp.hpl.jena.vocabulary.DC_11;
 
@@ -63,12 +64,13 @@ public class Kim {
 
 		// leeres Standard-Modell
 		Model model = ModelFactory.createDefaultModel();
-
+		ModelMaker modelMaker = ModelFactory.createMemModelMaker();
+		Model authModel = modelMaker.createModel("authModel");
 		// Variablen
 		Variables var = new Variables();
 		
 		HelveticatAuthData authData = new HelveticatAuthData();
-		authData.parseHelveticatAuthData(model);
+		authData.parseHelveticatAuthData(authModel);
 
 		// Marc-Felder-Liste
 		List<VariableField> listVariableField;
@@ -86,18 +88,21 @@ public class Kim {
 
 		try (OutputStream rdfXmlOutput = new FileOutputStream(var.fileRdfXml);
 				OutputStream rdfTurtleOutput = new FileOutputStream(
-						var.fileRdfTurtle);
+						var.fileRdfTurtle); OutputStream rdfTurtleOutputAuth = new FileOutputStream(
+								var.fileRdfTurtleAuth); OutputStream rdfXmlOutputAuth = new FileOutputStream(
+										var.fileRdfXmlAuth);
 				InputStream input = new FileInputStream(var.fileMrcIn);) {
-
+			int recordCounter = 1;
 			MarcReader reader = new MarcStreamReader(input);
 			while (reader.hasNext()) {
 				Record record = reader.next();
 				String bibId;
 				bibId = record.getControlNumber();
+				System.out.println("Bib-Record no. " + recordCounter + ": " + bibId);
 				// Nur Datensätze mit gültiger BibId verarbeiten
 				if ((bibId.length() == 13)
 						&& bibId.substring(0, 4).equals("vtls")) {
-					bibId = bibId.replace("vtls", "");
+					bibId = bibId.replace("vtls", "sz");
 
 					// Titel
 					listVariableField = record
@@ -107,7 +112,7 @@ public class Kim {
 					// Personen und Körperschaften
 					listVariableField = record
 							.getVariableFields(Constants.KIM_CREATOR);
-					creator.toRdf(listVariableField, model, bibId);
+					creator.toRdf(listVariableField, model, authModel, bibId);
 
 					// Ausgabebezeichnung
 					listVariableField = record.getVariableFields("250");
@@ -128,15 +133,17 @@ public class Kim {
 							.getVariableField("007");
 					ControlField f008 = (ControlField) record
 							.getVariableField("008");
-					if (f008 != null) {
-						if (f007 != null) {
-							mediaType.toRdf(leader, f007, f008, model, bibId);
-						} else {
-							mediaType.toRdf(leader, f008, model, bibId);
-						}
-					} else {
-						// TODO: Bib-Id in Error-Log: Kein Feld 008
-					}
+					mediaType.toRdf(leader, f007, f008, model, bibId);
+					
+//					if (f008 != null) {
+//						if (f007 != null) {
+//							mediaType.toRdf(leader, f007, f008, model, bibId);
+//						} else {
+//							mediaType.toRdf(leader, f008, model, bibId);
+//						}
+//					} else {
+//						// TODO: Bib-Id in Error-Log: Kein Feld 008
+//					}
 					
 					// Relationen
 					listVariableField = record
@@ -150,7 +157,7 @@ public class Kim {
 
 					// Gesamttitelangabe
 					listVariableField = record
-							.getVariableFields("490");
+							.getVariableFields(Constants.KIM_SERIES_STATEMENT);
 					seriesStatement.toRdf(listVariableField, model, bibId);
 					
 					// Identifier
@@ -165,7 +172,8 @@ public class Kim {
 					// TODO Ungültige BibId in Datei schreiben
 
 				}
-			}
+						recordCounter++;
+		}
 			model.setNsPrefix(Constants.NS_HELVETICAT_BIB_PREFIX,
 					Constants.NS_HELVETICAT_BIB);
 			model.setNsPrefix(Constants.NS_BIBO_PREFIX, Constants.NS_BIBO);
@@ -187,6 +195,8 @@ public class Kim {
 			model.write(rdfXmlOutput);
 			// Turtle in Datei schreiben
 			model.write(rdfTurtleOutput, "TTL");
+			authModel.write(rdfXmlOutputAuth);
+			authModel.write(rdfTurtleOutputAuth, "TTL");
 
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block

@@ -39,7 +39,7 @@ public class CreatorOrContributor {
 	 * @param model 			RDF-Model
 	 * @param id 				Bib-Id
 	 */
-	public void toRdf(List<VariableField> listVariableField, Model model,
+	public void toRdf(List<VariableField> listVariableField, Model model, Model authModel,
 			String id) {
 
 		Resource rdfSubject;
@@ -66,9 +66,9 @@ public class CreatorOrContributor {
 				}
 				data = StringTool.cleanUp(data);
 
-				data = queryModel(data, "preferredNameForThePerson", model);
+				data = queryModel(data, "preferredNameForThePerson", authModel);
 
-				if (data.startsWith("http://nb.admin.ch")) {
+				if (data.startsWith(Constants.NS_HELVETICAT_AUTH)) {
 					rdfSubject = model
 							.createResource(Constants.NS_HELVETICAT_BIB + id);
 					model.add(rdfSubject, DCTerms.creator, data);
@@ -92,9 +92,9 @@ public class CreatorOrContributor {
 				}
 				data = StringTool.cleanUp(data);
 
-				data = queryModel(data, "preferredNameForTheCorporateBody", model);
+				data = queryModel(data, "preferredNameForTheCorporateBody", authModel);
 
-				if (data.startsWith("http://nb.admin.ch")) {
+				if (data.startsWith(Constants.NS_HELVETICAT_AUTH)) {
 					rdfSubject = model
 							.createResource(Constants.NS_HELVETICAT_BIB + id);
 					model.add(rdfSubject, DCTerms.creator, data);
@@ -118,9 +118,9 @@ public class CreatorOrContributor {
 				}
 				data = StringTool.cleanUp(data);
 
-				data = queryModel(data, "preferredNameForTheConferenceOrEvent", model);
+				data = queryModel(data, "preferredNameForTheConferenceOrEvent", authModel);
 
-				if (data.startsWith("http://nb.admin.ch")) {
+				if (data.startsWith(Constants.NS_HELVETICAT_AUTH)) {
 					rdfSubject = model
 							.createResource(Constants.NS_HELVETICAT_BIB + id);
 					model.add(rdfSubject, DCTerms.creator, data);
@@ -144,9 +144,9 @@ public class CreatorOrContributor {
 				}
 				data = StringTool.cleanUp(data);
 
-				data = queryModel(data, "preferredNameForThePerson", model);
+				data = queryModel(data, "preferredNameForThePerson", authModel);
 
-				if (data.startsWith("http://nb.admin.ch")) {
+				if (data.startsWith(Constants.NS_HELVETICAT_AUTH)) {
 					rdfSubject = model
 							.createResource(Constants.NS_HELVETICAT_BIB + id);
 					model.add(rdfSubject, DCTerms.contributor, data);
@@ -172,9 +172,9 @@ public class CreatorOrContributor {
 				data = StringTool.cleanUp(data);
 
 
-				data = queryModel(data, "preferredNameForTheCorporateBody", model);
+				data = queryModel(data, "preferredNameForTheCorporateBody", authModel);
 
-				if (data.startsWith("http://nb.admin.ch")) {
+				if (data.startsWith(Constants.NS_HELVETICAT_AUTH)){
 					rdfSubject = model
 							.createResource(Constants.NS_HELVETICAT_BIB + id);
 					model.add(rdfSubject, DCTerms.contributor, data);
@@ -198,9 +198,9 @@ public class CreatorOrContributor {
 				}
 				data = StringTool.cleanUp(data);
 
-				data = queryModel(data, "preferredNameForTheConferenceOrEvent", model);
+				data = queryModel(data, "preferredNameForTheConferenceOrEvent", authModel);
 
-				if (data.startsWith("http://nb.admin.ch")) {
+				if (data.startsWith(Constants.NS_HELVETICAT_AUTH)) {
 					rdfSubject = model
 							.createResource(Constants.NS_HELVETICAT_BIB + id);
 					model.add(rdfSubject, DCTerms.contributor, data);

@@ -70,51 +70,45 @@ public class Relation {
 
 				case "773":
 					data = df.getSubfield('w').getData();
-					data = StringTool.leftPad(data, 9, '0');
-					model.add(rdfSubject, DCTerms.isPartOf,
-							Constants.NS_HELVETICAT_BIB + data);
+					data = _permalink(data);
+					model.add(rdfSubject, DCTerms.isPartOf, data);
 
 					break;
 
 				case "774":
 					data = df.getSubfield('w').getData();
-					data = StringTool.leftPad(data, 9, '0');
-					model.add(rdfSubject, DCTerms.hasPart,
-							Constants.NS_HELVETICAT_BIB + data);
+					data = _permalink(data);
+					model.add(rdfSubject, DCTerms.hasPart, data);
 
 					break;
 
 				case "775":
 					data = df.getSubfield('w').getData();
-					data = StringTool.leftPad(data, 9, '0');
-
-					model.add(rdfSubject, DCTerms.hasVersion,
-							Constants.NS_HELVETICAT_BIB + data);
+					data = _permalink(data);
+					model.add(rdfSubject, DCTerms.hasVersion, data);
 
 					break;
 
 				case "776":
 					data = df.getSubfield('w').getData();
-					data = StringTool.leftPad(data, 9, '0');
-					model.add(rdfSubject, DCTerms.isFormatOf,
-							Constants.NS_HELVETICAT_BIB + data);
+					data = _permalink(data);
+
+					model.add(rdfSubject, DCTerms.isFormatOf, data);
 
 					break;
 
 				case "770":
 					data = df.getSubfield('w').getData();
-					data = StringTool.leftPad(data, 9, '0');
-					model.add(rdfSubject, DCTerms.isPartOf,
-							Constants.NS_HELVETICAT_BIB + data);
+					data = _permalink(data);
+					model.add(rdfSubject, DCTerms.isPartOf, data);
 
 					break;
 
 				case "780":
 					data = df.getSubfield('w').getData();
-					data = StringTool.leftPad(data, 9, '0');
+					data = _permalink(data);
 					rdfPredicate = model
 							.createProperty(Constants.NS_RDAU_PREFIX_PRECEDED_BY);
-
 					model.add(rdfSubject, rdfPredicate,
 							Constants.NS_HELVETICAT_BIB + data);
 
@@ -122,10 +116,9 @@ public class Relation {
 
 				case "785":
 					data = df.getSubfield('w').getData();
-					data = StringTool.leftPad(data, 9, '0');
+					data = _permalink(data);
 					rdfPredicate = model
 							.createProperty(Constants.NS_RDAU_PREFIX_SUCCEEDED_BY);
-
 					model.add(rdfSubject, rdfPredicate,
 							Constants.NS_HELVETICAT_BIB + data);
 
@@ -133,39 +126,42 @@ public class Relation {
 
 				case "800":
 					data = df.getSubfield('w').getData();
-					data = StringTool.leftPad(data, 9, '0');
-					model.add(rdfSubject, DCTerms.isPartOf,
-							Constants.NS_HELVETICAT_BIB + data);
+					data = _permalink(data);
+					model.add(rdfSubject, DCTerms.isPartOf, data);
 
 					break;
 
 				case "810":
 					data = df.getSubfield('w').getData();
-					data = StringTool.leftPad(data, 9, '0');
-					model.add(rdfSubject, DCTerms.isPartOf,
-							Constants.NS_HELVETICAT_BIB + data);
+					data = _permalink(data);
+					model.add(rdfSubject, DCTerms.isPartOf, data);
 
 					break;
 
 				case "811":
 					data = df.getSubfield('w').getData();
-					data = StringTool.leftPad(data, 9, '0');
-					model.add(rdfSubject, DCTerms.isPartOf,
-							Constants.NS_HELVETICAT_BIB + data);
+					data = _permalink(data);
+					model.add(rdfSubject, DCTerms.isPartOf, data);
 
 					break;
 
 				case "830":
 					data = df.getSubfield('w').getData();
-					data = StringTool.leftPad(data, 9, '0');
-					model.add(rdfSubject, DCTerms.isPartOf,
-							Constants.NS_HELVETICAT_BIB + data);
+					data = _permalink(data);
+					model.add(rdfSubject, DCTerms.isPartOf, data);
+
 					break;
 
 				}
 			}
 		}
 
+	}
+	private String _permalink(String data){
+		data = StringTool.leftPad(data, 9, '0');
+		data = "sz".concat(data);
+		data = Constants.NS_HELVETICAT_BIB.concat(data);
+		return data;
 	}
 
 }

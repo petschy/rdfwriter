@@ -61,7 +61,7 @@ public class SeriesStatement {
 				
 				data = StringTool.cleanUp(data);
 			}
-			System.out.println(data);
+//			System.out.println(data);
 			model.add(rdfSubject, DCTerms.bibliographicCitation, data);
 
 		}
